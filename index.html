@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-AI Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"
+        integrity="sha512-VNW35QfbUfn5nwLxgPLZld0dfzpOwLKhPNgm6kKiC9JIhbnoAVnX1nvUs9f7o+Jfm6D/Ebhj116IhO+QYIG9BA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body data-theme="dark">
+    <div class="background-glow"></div>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__header">
+                <div class="brand">
+                    <div class="brand__logo">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="brand__copy">
+                        <strong>Multi-AI Hub</strong>
+                        <span>Orquestra&ccedil;&atilde;o inteligente</span>
+                    </div>
+                </div>
+                <button class="icon-btn icon-btn--ghost hide-desktop" id="sidebarClose" aria-label="Fechar menu">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <button class="primary-btn new-chat-btn" id="newChatBtn">
+                <i class="fas fa-plus"></i>
+                Nova conversa
+            </button>
+
+            <div class="sidebar__section">
+                <div class="section-title">
+                    <span>Hist&oacute;rico</span>
+                    <div class="section-actions">
+                        <span class="section-counter" id="historyCounter">0</span>
+                        <button class="icon-btn icon-btn--ghost" id="clearHistoryBtn" title="Excluir todo o histórico">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="history-empty" id="historyEmptyState">
+                    <i class="fas fa-comment"></i>
+                    <p>Comece uma conversa para criar seu primeiro registro.</p>
+                </div>
+                <div class="chat-history" id="chatHistory" aria-live="polite"></div>
+            </div>
+
+            <div class="sidebar__footer">
+                <div class="sidebar__footer-actions">
+                    <button class="icon-btn" id="themeToggle" title="Alternar tema">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="icon-btn" id="settingsBtn" title="Prefer&ecirc;ncias">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+                <div class="api-status-pill" id="apiStatus" title="Status das integra&ccedil;&otilde;es">
+                    <span class="status-dot status-dot--idle" id="apiStatusDot"></span>
+                    <span id="apiStatusLabel">Verificando APIs</span>
+                </div>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <header class="workspace__header">
+                <button class="icon-btn icon-btn--ghost hide-desktop" id="sidebarToggle" aria-label="Abrir menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="workspace__header-center">
+                    <label class="input-label" for="modelSelect">Modelo ativo</label>
+                    <div class="select-wrapper">
+                        <select id="modelSelect" aria-describedby="modelHelper"></select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <small id="modelHelper">Escolha o provedor e o modelo para esta conversa.</small>
+                </div>
+                <div class="workspace__header-actions">
+                    <button class="ghost-btn" id="clearChat">
+                        <i class="fas fa-broom"></i>
+                        Limpar conversa
+                    </button>
+                </div>
+            </header>
+
+            <section class="conversation" id="chatContainer">
+                <div class="welcome">
+                    <div class="welcome__badge">
+                        <i class="fas fa-sparkles"></i>
+                        <span>Controle unificado</span>
+                    </div>
+                    <h1>Transforme suas ideias com diversos modelos de IA.</h1>
+                    <p>
+                        Conduza experi&ecirc;ncias, compare respostas e construa fluxos avan&ccedil;ados em um s&oacute;
+                        lugar.
+                        Escolha um modelo abaixo ou envie uma mensagem para come&ccedil;ar.
+                    </p>
+
+                    <div class="suggestion-grid" role="list">
+                        <button class="suggestion-card"
+                            data-prompt="Crie uma estrat&eacute;gia para combinar modelos de IA diferentes no mesmo fluxo de trabalho.">
+                            <span class="suggestion-card__icon"><i class="fas fa-layer-group"></i></span>
+                            <span class="suggestion-card__title">Estrat&eacute;gia de orquestra&ccedil;&atilde;o</span>
+                            <span class="suggestion-card__subtitle">Fluxos h&iacute;bridos com maior qualidade.</span>
+                        </button>
+                        <button class="suggestion-card"
+                            data-prompt="Gere uma pauta de reuni&atilde;o semanal focada em resultados com insights baseados em IA.">
+                            <span class="suggestion-card__icon"><i class="fas fa-table-list"></i></span>
+                            <span class="suggestion-card__title">Pauta de reuni&atilde;o</span>
+                            <span class="suggestion-card__subtitle">Organiza&ccedil;&atilde;o colaborativa
+                                garantida.</span>
+                        </button>
+                        <button class="suggestion-card"
+                            data-prompt="Proponha um prompt para gerar imagens de campanha sobre energia limpa.">
+                            <span class="suggestion-card__icon"><i class="fas fa-image"></i></span>
+                            <span class="suggestion-card__title">Prompt criativo</span>
+                            <span class="suggestion-card__subtitle">Design visual com consist&ecirc;ncia.</span>
+                        </button>
+                        <button class="suggestion-card"
+                            data-prompt="Explique boas pr&aacute;ticas de seguran&ccedil;a ao consumir APIs de modelos de linguagem.">
+                            <span class="suggestion-card__icon"><i class="fas fa-shield"></i></span>
+                            <span class="suggestion-card__title">Seguran&ccedil;a em IA</span>
+                            <span class="suggestion-card__subtitle">Checklist para time de engenharia.</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="composer">
+                <div class="composer__inner">
+                    <textarea id="messageInput" placeholder="Escreva sua mensagem..." rows="1"
+                        aria-label="Mensagem"></textarea>
+                    <button class="primary-btn send-btn" id="sendBtn" disabled>
+                        <span>Enviar</span>
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+                <div class="composer__meta">
+                    <small>O Multi-AI Hub pode gerar respostas incorretas. Valide informa&ccedil;&otilde;es
+                        cr&iacute;ticas.</small>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal__container">
+            <header class="modal__header">
+                <div>
+                    <h3 id="modalTitle"><i class="fas fa-cog"></i> Prefer&ecirc;ncias</h3>
+                    <p>Personalize a experi&ecirc;ncia e visualize o status das integra&ccedil;&otilde;es.</p>
+                </div>
+                <button class="icon-btn icon-btn--ghost" id="closeModal" aria-label="Fechar prefer&ecirc;ncias">
+                    <i class="fas fa-times"></i>
+                </button>
+            </header>
+
+            <div class="modal__body">
+                <section>
+                    <h4 class="modal-section-title"><i class="fas fa-satellite"></i> Status das APIs</h4>
+                    <div class="api-grid" id="apiStatusGrid"></div>
+                    <div class="modal-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>As chaves de API s&atilde;o carregadas via back-end. Atualize o arquivo <code>.env</code>
+                            do servidor e reinicie a aplica&ccedil;&atilde;o.</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 class="modal-section-title"><i class="fas fa-tachometer-alt"></i> Ajustes da conversa</h4>
+                    <div class="form-grid">
+                        <label class="form-control">
+                            <span>Temperatura</span>
+                            <input type="range" id="temperatureSlider" min="0" max="2" step="0.1">
+                            <span class="slider-value" id="temperatureValue">0.7</span>
+                        </label>
+                        <label class="form-control">
+                            <span>Tokens m&aacute;ximos</span>
+                            <input type="number" id="maxTokens" min="100" max="4000" step="50">
+                        </label>
+                        <label class="form-control">
+                            <span>Tema</span>
+                            <select id="themeSelect">
+                                <option value="dark">Escuro</option>
+                                <option value="light">Claro</option>
+                                <option value="auto">Autom&aacute;tico</option>
+                            </select>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="modal__footer">
+                <button class="ghost-btn" id="cancelSettings">Cancelar</button>
+                <button class="primary-btn" id="saveSettings">
+                    <i class="fas fa-check"></i>
+                    Salvar altera&ccedil;&otilde;es
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
