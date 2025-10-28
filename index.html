@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-AI Hub</title>
+    <meta name="description" content="Plataforma unificada para interação com múltiplas APIs de IA - Interface moderna e responsiva">
+    <meta name="keywords" content="IA, AI, ChatGPT, Claude, Gemini, Multi-AI, Interface, Responsiva">
+    <meta name="author" content="Multi-AI Hub">
+    <title>Multi-AI Hub - Plataforma Unificada de IA</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"
-        integrity="sha512-VNW35QfbUfn5nwLxgPLZld0dfzpOwLKhPNgm6kKiC9JIhbnoAVnX1nvUs9f7o+Jfm6D/Ebhj116IhO+QYIG9BA=="
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body data-theme="dark">
@@ -21,7 +25,7 @@
             <div class="sidebar__header">
                 <div class="brand">
                     <div class="brand__logo">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
                     <div class="brand__copy">
                         <strong>Multi-AI Hub</strong>
@@ -95,41 +99,40 @@
             <section class="conversation" id="chatContainer">
                 <div class="welcome">
                     <div class="welcome__badge">
-                        <i class="fas fa-sparkles"></i>
-                        <span>Controle unificado</span>
+                        <i class="fas fa-magic"></i>
+                        <span>Plataforma Unificada</span>
                     </div>
-                    <h1>Transforme suas ideias com diversos modelos de IA.</h1>
+                    <h1>Potencialize sua criatividade com IA de última geração</h1>
                     <p>
-                        Conduza experi&ecirc;ncias, compare respostas e construa fluxos avan&ccedil;ados em um s&oacute;
-                        lugar.
-                        Escolha um modelo abaixo ou envie uma mensagem para come&ccedil;ar.
+                        Acesse múltiplos modelos de IA em uma interface elegante e intuitiva. 
+                        Compare respostas, experimente diferentes abordagens e descubra o poder 
+                        da inteligência artificial colaborativa.
                     </p>
 
                     <div class="suggestion-grid" role="list">
                         <button class="suggestion-card"
-                            data-prompt="Crie uma estrat&eacute;gia para combinar modelos de IA diferentes no mesmo fluxo de trabalho.">
-                            <span class="suggestion-card__icon"><i class="fas fa-layer-group"></i></span>
-                            <span class="suggestion-card__title">Estrat&eacute;gia de orquestra&ccedil;&atilde;o</span>
-                            <span class="suggestion-card__subtitle">Fluxos h&iacute;bridos com maior qualidade.</span>
+                            data-prompt="Crie uma estratégia completa para integrar múltiplos modelos de IA em um fluxo de trabalho otimizado.">
+                            <span class="suggestion-card__icon"><i class="fas fa-network-wired"></i></span>
+                            <span class="suggestion-card__title">Arquitetura Multi-IA</span>
+                            <span class="suggestion-card__subtitle">Orquestração inteligente de modelos para máxima eficiência.</span>
                         </button>
                         <button class="suggestion-card"
-                            data-prompt="Gere uma pauta de reuni&atilde;o semanal focada em resultados com insights baseados em IA.">
-                            <span class="suggestion-card__icon"><i class="fas fa-table-list"></i></span>
-                            <span class="suggestion-card__title">Pauta de reuni&atilde;o</span>
-                            <span class="suggestion-card__subtitle">Organiza&ccedil;&atilde;o colaborativa
-                                garantida.</span>
+                            data-prompt="Desenvolva um plano de conteúdo inovador para redes sociais usando insights de IA generativa.">
+                            <span class="suggestion-card__icon"><i class="fas fa-rocket"></i></span>
+                            <span class="suggestion-card__title">Conteúdo Viral</span>
+                            <span class="suggestion-card__subtitle">Estratégias criativas baseadas em dados e tendências.</span>
                         </button>
                         <button class="suggestion-card"
-                            data-prompt="Proponha um prompt para gerar imagens de campanha sobre energia limpa.">
-                            <span class="suggestion-card__icon"><i class="fas fa-image"></i></span>
-                            <span class="suggestion-card__title">Prompt criativo</span>
-                            <span class="suggestion-card__subtitle">Design visual com consist&ecirc;ncia.</span>
+                            data-prompt="Crie prompts avançados para geração de imagens artísticas com estilo cinematográfico profissional.">
+                            <span class="suggestion-card__icon"><i class="fas fa-palette"></i></span>
+                            <span class="suggestion-card__title">Arte Digital</span>
+                            <span class="suggestion-card__subtitle">Criação visual com qualidade cinematográfica.</span>
                         </button>
                         <button class="suggestion-card"
-                            data-prompt="Explique boas pr&aacute;ticas de seguran&ccedil;a ao consumir APIs de modelos de linguagem.">
-                            <span class="suggestion-card__icon"><i class="fas fa-shield"></i></span>
-                            <span class="suggestion-card__title">Seguran&ccedil;a em IA</span>
-                            <span class="suggestion-card__subtitle">Checklist para time de engenharia.</span>
+                            data-prompt="Elabore um guia completo de segurança e ética para implementação responsável de IA em empresas.">
+                            <span class="suggestion-card__icon"><i class="fas fa-shield-alt"></i></span>
+                            <span class="suggestion-card__title">IA Responsável</span>
+                            <span class="suggestion-card__subtitle">Implementação ética e segura de sistemas inteligentes.</span>
                         </button>
                     </div>
                 </div>
@@ -137,16 +140,18 @@
 
             <footer class="composer">
                 <div class="composer__inner">
-                    <textarea id="messageInput" placeholder="Escreva sua mensagem..." rows="1"
+                    <textarea id="messageInput" placeholder="Digite sua mensagem ou pergunta..." rows="1"
                         aria-label="Mensagem"></textarea>
                     <button class="primary-btn send-btn" id="sendBtn" disabled>
                         <span>Enviar</span>
-                        <i class="fas fa-arrow-up"></i>
+                        <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
                 <div class="composer__meta">
-                    <small>O Multi-AI Hub pode gerar respostas incorretas. Valide informa&ccedil;&otilde;es
-                        cr&iacute;ticas.</small>
+                    <small>
+                        <i class="fas fa-info-circle"></i>
+                        A IA pode ocasionalmente gerar informações imprecisas. Sempre verifique dados importantes.
+                    </small>
                 </div>
             </footer>
         </main>
@@ -211,7 +216,7 @@
 
     <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
-    <script src="script.js" defer></script>
+    <script src="js/script.js" defer></script>
 </body>
 
 </html>

@@ -81,6 +81,105 @@ class MultiAIChat {
         this.elements.welcome = this.elements.chatContainer?.querySelector(".welcome");
         this.elements.suggestionCards = Array.from(document.querySelectorAll(".suggestion-card"));
         this.elements.clearHistoryBtn = document.getElementById("clearHistoryBtn");
+
+        // Adicionar efeitos visuais aprimorados
+        this.addVisualEnhancements();
+    }
+
+    addVisualEnhancements() {
+        // Adicionar efeito de hover suave nos botões
+        document.querySelectorAll('.primary-btn, .ghost-btn, .icon-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-2px)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Adicionar animação de digitação no textarea
+        if (this.elements.messageInput) {
+            this.elements.messageInput.addEventListener('focus', () => {
+                this.elements.messageInput.parentElement.style.transform = 'scale(1.02)';
+            });
+            this.elements.messageInput.addEventListener('blur', () => {
+                this.elements.messageInput.parentElement.style.transform = 'scale(1)';
+            });
+        }
+    }
+
+    setupMobileScrollEnhancements() {
+        const suggestionGrid = document.querySelector('.suggestion-grid');
+        if (!suggestionGrid) return;
+
+        // Detectar se é dispositivo móvel
+        const isMobile = window.innerWidth <= 640;
+        if (!isMobile) return;
+
+        // Adicionar indicadores de scroll
+        let scrollIndicator = null;
+        
+        const updateScrollIndicator = () => {
+            if (!scrollIndicator) return;
+            
+            const { scrollLeft, scrollWidth, clientWidth } = suggestionGrid;
+            const scrollPercentage = scrollLeft / (scrollWidth - clientWidth);
+            
+            if (scrollPercentage >= 0.9) {
+                scrollIndicator.style.opacity = '0';
+            } else {
+                scrollIndicator.style.opacity = '0.7';
+            }
+        };
+
+        // Criar indicador de scroll se necessário
+        if (suggestionGrid.scrollWidth > suggestionGrid.clientWidth) {
+            const welcome = document.querySelector('.welcome');
+            if (welcome && !welcome.querySelector('.scroll-indicator')) {
+                scrollIndicator = document.createElement('div');
+                scrollIndicator.className = 'scroll-indicator';
+                scrollIndicator.innerHTML = '→';
+                scrollIndicator.style.cssText = `
+                    position: absolute;
+                    bottom: 16px;
+                    right: 20px;
+                    width: 24px;
+                    height: 24px;
+                    background: var(--color-accent);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: bold;
+                    opacity: 0.7;
+                    pointer-events: none;
+                    z-index: 1;
+                    transition: opacity 0.3s ease;
+                `;
+                welcome.appendChild(scrollIndicator);
+            }
+        }
+
+        // Listener para scroll
+        suggestionGrid.addEventListener('scroll', updateScrollIndicator);
+
+        // Smooth scroll para cards
+        this.elements.suggestionCards?.forEach((card, index) => {
+            card.addEventListener('focus', () => {
+                card.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            });
+        });
+
+        // Atualizar indicador no resize
+        window.addEventListener('resize', () => {
+            setTimeout(updateScrollIndicator, 100);
+        });
     }
 
     bindEvents() {
@@ -158,6 +257,9 @@ class MultiAIChat {
                 this.sendMessage();
             });
         });
+
+        // Melhorar experiência de scroll em dispositivos móveis
+        this.setupMobileScrollEnhancements();
 
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
             if (this.state.settings.theme === "auto") {
