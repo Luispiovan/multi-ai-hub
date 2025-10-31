@@ -23,7 +23,7 @@ class MultiAIChat {
             modelGroups: [],
             providers: [],
             defaults: {
-                model: "openai-gpt-4o",
+                model: "gpt-4o",
                 temperature: DEFAULT_SETTINGS.temperature,
                 maxTokens: DEFAULT_SETTINGS.maxTokens
             }
@@ -485,35 +485,49 @@ class MultiAIChat {
                 label: "OpenAI - Conversacao",
                 models: [
                     {
-                        id: "openai-gpt-4o",
+                        id: "gpt-4o",
                         name: "GPT-4o",
                         summary: "mais recente",
-                        description: "Modelo multimodal com equilibrio entre qualidade e latencia.",
+                        description: "Modelo multimodal de ultima geracao com equilibrio entre qualidade e latencia.",
                         provider: "openai"
                     },
                     {
-                        id: "openai-gpt-4o-mini",
+                        id: "gpt-4o-mini",
                         name: "GPT-4o Mini",
                         summary: "leve",
-                        description: "Ideal para prototipos rapidos com excelente custo.",
+                        description: "Versao compacta e economica do GPT-4o.",
                         provider: "openai"
                     },
                     {
-                        id: "openai-gpt-3.5-turbo",
-                        name: "GPT-3.5 Turbo",
-                        summary: "economico",
-                        description: "Boa opcao para tarefas do dia a dia e automacoes.",
+                        id: "gpt-4-turbo",
+                        name: "GPT-4 Turbo",
+                        summary: "premium",
+                        description: "Modelo avancado com contexto estendido.",
                         provider: "openai"
                     },
                     {
-                        id: "openai-dall-e-3",
+                        id: "o1-preview",
+                        name: "O1 Preview",
+                        summary: "raciocinio",
+                        description: "Modelo de raciocinio avancado para problemas complexos.",
+                        provider: "openai"
+                    },
+                    {
+                        id: "o1-mini",
+                        name: "O1 Mini",
+                        summary: "raciocinio leve",
+                        description: "Versao compacta do O1 para raciocinio rapido.",
+                        provider: "openai"
+                    },
+                    {
+                        id: "dall-e-3",
                         name: "DALL-E 3",
                         summary: "imagens",
                         description: "Geracao de imagens detalhadas a partir de prompts.",
                         provider: "openai"
                     },
                     {
-                        id: "openai-dall-e-2",
+                        id: "dall-e-2",
                         name: "DALL-E 2",
                         summary: "imagens",
                         description: "Alternativa leve para criacao de imagens.",
@@ -526,17 +540,31 @@ class MultiAIChat {
                 label: "Anthropic - Claude",
                 models: [
                     {
-                        id: "anthropic-claude-3-5-sonnet",
+                        id: "claude-3-7-sonnet-20250219",
+                        name: "Claude 3.7 Sonnet",
+                        summary: "mais recente",
+                        description: "Modelo de ultima geracao com raciocinio superior e contexto ampliado.",
+                        provider: "anthropic"
+                    },
+                    {
+                        id: "claude-3-5-sonnet-20241022",
                         name: "Claude 3.5 Sonnet",
                         summary: "equilibrio",
                         description: "Raciocinio avancado com custo controlado.",
                         provider: "anthropic"
                     },
                     {
-                        id: "anthropic-claude-3-haiku",
-                        name: "Claude 3 Haiku",
+                        id: "claude-3-5-haiku-20241022",
+                        name: "Claude 3.5 Haiku",
                         summary: "veloz",
                         description: "Latencia reduzida e respostas concisas.",
+                        provider: "anthropic"
+                    },
+                    {
+                        id: "claude-3-opus-20240229",
+                        name: "Claude 3 Opus",
+                        summary: "premium",
+                        description: "Maxima qualidade para tarefas complexas.",
                         provider: "anthropic"
                     }
                 ]
@@ -546,17 +574,31 @@ class MultiAIChat {
                 label: "Google - Gemini",
                 models: [
                     {
-                        id: "google-gemini-1.5-pro",
-                        name: "Gemini 1.5 Pro",
-                        summary: "multimodal",
-                        description: "Integra texto, imagem e codigo com contexto ampliado.",
+                        id: "gemini-2.0-flash-exp",
+                        name: "Gemini 2.0 Flash Experimental",
+                        summary: "experimental",
+                        description: "Versao experimental de proxima geracao com multimodalidade avancada.",
                         provider: "google"
                     },
                     {
-                        id: "google-gemini-1.5-flash",
+                        id: "gemini-1.5-pro",
+                        name: "Gemini 1.5 Pro",
+                        summary: "multimodal",
+                        description: "Integra texto, imagem e codigo com contexto ampliado de ate 2M tokens.",
+                        provider: "google"
+                    },
+                    {
+                        id: "gemini-1.5-flash",
                         name: "Gemini 1.5 Flash",
                         summary: "alto volume",
                         description: "Respostas rapidas para fluxos com muito trafego.",
+                        provider: "google"
+                    },
+                    {
+                        id: "gemini-1.5-flash-8b",
+                        name: "Gemini 1.5 Flash-8B",
+                        summary: "ultra leve",
+                        description: "Versao ultra compacta para alto volume e baixo custo.",
                         provider: "google"
                     }
                 ]
@@ -566,15 +608,15 @@ class MultiAIChat {
                 label: "Perplexity - Sonar",
                 models: [
                     {
-                        id: "perplexity-sonar-large-online",
-                        name: "Sonar Large Online",
+                        id: "sonar-pro",
+                        name: "Sonar Pro",
                         summary: "pesquisa",
                         description: "Combina RAG com pesquisa atualizada da web.",
                         provider: "perplexity"
                     },
                     {
-                        id: "perplexity-sonar-medium-online",
-                        name: "Sonar Medium Online",
+                        id: "sonar",
+                        name: "Sonar",
                         summary: "equilibrio",
                         description: "Boa relacao entre custo e cobertura de fontes.",
                         provider: "perplexity"
@@ -593,10 +635,10 @@ class MultiAIChat {
                         provider: "deepseek"
                     },
                     {
-                        id: "deepseek-coder",
-                        name: "DeepSeek Coder",
-                        summary: "codigo",
-                        description: "Especializado em analise e geracao de codigo.",
+                        id: "deepseek-reasoner",
+                        name: "DeepSeek Reasoner",
+                        summary: "raciocinio profundo",
+                        description: "Modelo especializado em raciocinio complexo e analise.",
                         provider: "deepseek"
                     }
                 ]
