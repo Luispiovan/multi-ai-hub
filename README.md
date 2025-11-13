@@ -43,7 +43,7 @@ sudo apt install git -y
 
 ```bash
 # Clonar repositório
-git clone https://github.com/seu-usuario/multi-ai-hub.git
+git clone https://github.com/Luispiovan/multi-ai-hub.git
 cd multi-ai-hub
 
 # Instalar dependências
@@ -303,4 +303,4 @@ MIT License - Livre para uso pessoal e comercial.
 
 **🎉 Multi-AI Hub pronto para produção em servidor Linux!**
 
-*Para suporte: [Criar issue no GitHub](https://github.com/seu-usuario/multi-ai-hub/issues)*
+*Para suporte: [Criar issue no GitHub](https://github.com/Luispiovan/multi-ai-hub/issues)*
