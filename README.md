@@ -5,12 +5,13 @@ Plataforma web moderna e responsiva para interação unificada com múltiplas AP
 ## 📋 Características
 
 - **🧠 Múltiplas APIs de IA**: OpenAI GPT-4o, Claude 3.5, Gemini 1.5, Perplexity, DeepSeek
+- **🔑 Gerenciamento de API Keys**: Configure suas chaves diretamente no front-end
 - **🎨 Interface Moderna**: Design responsivo com glassmorphism e animações suaves
 - **📱 Totalmente Responsivo**: Scroll lateral inteligente em mobile, grid adaptativo
 - **🌓 Tema Claro/Escuro**: Alternância automática com preferência salva
 - **💬 Histórico Inteligente**: Gerenciamento completo de conversas
 - **⚙️ Configurações Avançadas**: Controle de temperatura, tokens e modelos
-- **🔒 Privacidade Total**: Dados armazenados localmente no navegador
+- **🔒 Privacidade Total**: Chaves de API e conversas armazenadas localmente no navegador
 
 ## 🛠️ Tecnologias
 
@@ -53,34 +54,23 @@ npm install
 cp .env.example .env
 ```
 
-### 3. Configurar APIs
+### 3. Configurar Servidor (Opcional)
 
-Edite o arquivo `.env` com suas chaves de API:
+O arquivo `.env` é opcional. As chaves de API podem ser configuradas diretamente no front-end:
 
 ```bash
+# Criar arquivo de configuração (opcional)
+cp .env.example .env
 nano .env
 ```
 
 ```env
-# OpenAI
-OPENAI_API_KEY=sk-sua-chave-openai-aqui
-
-# Anthropic
-ANTHROPIC_API_KEY=sk-ant-sua-chave-anthropic-aqui
-
-# Google
-GOOGLE_API_KEY=AIza-sua-chave-google-aqui
-
-# Perplexity
-PERPLEXITY_API_KEY=pplx-sua-chave-perplexity-aqui
-
-# DeepSeek
-DEEPSEEK_API_KEY=sk-sua-chave-deepseek-aqui
-
 # Configurações do servidor
 PORT=3000
 NODE_ENV=production
 ```
+
+**💡 Nota**: As chaves de API agora podem ser configuradas diretamente na interface web através do menu de Configurações!
 
 ### 4. Executar Aplicação
 
@@ -148,7 +138,23 @@ sudo crontab -e
 # Adicionar: 0 12 * * * /usr/bin/certbot renew --quiet
 ```
 
-## 🔗 Obter Chaves de API
+## 🔑 Configurar API Keys no Front-end
+
+### Método Recomendado: Interface Web
+
+1. Acesse a aplicação no navegador
+2. Clique no ícone de **Configurações** (⚙️) na barra lateral
+3. Na seção **"Chaves de API"**, insira suas chaves:
+   - OpenAI API Key
+   - Anthropic API Key
+   - Google API Key
+   - Perplexity API Key
+   - DeepSeek API Key
+4. Clique em **"Salvar alterações"**
+
+**🔒 Segurança**: Suas chaves são armazenadas localmente no navegador (localStorage) e nunca são enviadas para servidores externos.
+
+### Obter Chaves de API
 
 | Provedor | URL | Tipo |
 |----------|-----|------|

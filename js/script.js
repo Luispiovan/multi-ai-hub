@@ -1,7 +1,8 @@
 ﻿const STORAGE_KEYS = {
     CHATS: "multiAI_chats_v2",
     SETTINGS: "multiAI_settings_v2",
-    CURRENT_CHAT: "multiAI_current_chat_v2"
+    CURRENT_CHAT: "multiAI_current_chat_v2",
+    API_KEYS: "multiAI_api_keys_v2"
 };
 
 const DEFAULT_SETTINGS = {
@@ -10,12 +11,21 @@ const DEFAULT_SETTINGS = {
     maxTokens: 2000
 };
 
+const DEFAULT_API_KEYS = {
+    openai: "",
+    anthropic: "",
+    google: "",
+    perplexity: "",
+    deepseek: ""
+};
+
 class MultiAIChat {
     constructor() {
         this.state = {
             chats: this.loadChats(),
             currentChatId: this.loadCurrentChatId(),
             settings: this.loadSettings(),
+            apiKeys: this.loadApiKeys(),
             isSending: false
         };
 
@@ -81,6 +91,13 @@ class MultiAIChat {
         this.elements.welcome = this.elements.chatContainer?.querySelector(".welcome");
         this.elements.suggestionCards = Array.from(document.querySelectorAll(".suggestion-card"));
         this.elements.clearHistoryBtn = document.getElementById("clearHistoryBtn");
+        
+        // Campos de API Keys
+        this.elements.openaiKey = document.getElementById("openaiKey");
+        this.elements.anthropicKey = document.getElementById("anthropicKey");
+        this.elements.googleKey = document.getElementById("googleKey");
+        this.elements.perplexityKey = document.getElementById("perplexityKey");
+        this.elements.deepseekKey = document.getElementById("deepseekKey");
 
         // Adicionar efeitos visuais aprimorados
         this.addVisualEnhancements();
@@ -338,6 +355,27 @@ class MultiAIChat {
 
         return { ...DEFAULT_SETTINGS };
     }
+
+    loadApiKeys() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEYS.API_KEYS);
+            if (stored) {
+                return { ...DEFAULT_API_KEYS, ...JSON.parse(stored) };
+            }
+        } catch (error) {
+            console.warn("Falha ao carregar chaves de API:", error);
+        }
+        return { ...DEFAULT_API_KEYS };
+    }
+
+    saveApiKeys() {
+        try {
+            localStorage.setItem(STORAGE_KEYS.API_KEYS, JSON.stringify(this.state.apiKeys));
+        } catch (error) {
+            console.warn("Falha ao salvar chaves de API:", error);
+        }
+    }
+
     loadCurrentChatId() {
         try {
             return localStorage.getItem(STORAGE_KEYS.CURRENT_CHAT) || null;
@@ -370,6 +408,23 @@ class MultiAIChat {
             this.elements.themeSelect.value = theme;
         }
         this.applyTheme(theme);
+
+        // Aplicar API keys aos campos
+        if (this.elements.openaiKey) {
+            this.elements.openaiKey.value = this.state.apiKeys.openai || "";
+        }
+        if (this.elements.anthropicKey) {
+            this.elements.anthropicKey.value = this.state.apiKeys.anthropic || "";
+        }
+        if (this.elements.googleKey) {
+            this.elements.googleKey.value = this.state.apiKeys.google || "";
+        }
+        if (this.elements.perplexityKey) {
+            this.elements.perplexityKey.value = this.state.apiKeys.perplexity || "";
+        }
+        if (this.elements.deepseekKey) {
+            this.elements.deepseekKey.value = this.state.apiKeys.deepseek || "";
+        }
     }
 
     ensureActiveChat() {
@@ -661,47 +716,43 @@ class MultiAIChat {
             return;
         }
 
-        const providers = Array.isArray(this.config.providers) ? this.config.providers : [];
-        const activeProviders = providers.filter((provider) => provider.enabled !== false);
+        // Verificar chaves de API do localStorage
+        const localProviders = [
+            { id: 'openai', name: 'OpenAI', key: this.state.apiKeys.openai },
+            { id: 'anthropic', name: 'Anthropic', key: this.state.apiKeys.anthropic },
+            { id: 'google', name: 'Google', key: this.state.apiKeys.google },
+            { id: 'perplexity', name: 'Perplexity', key: this.state.apiKeys.perplexity },
+            { id: 'deepseek', name: 'DeepSeek', key: this.state.apiKeys.deepseek }
+        ];
 
-        if (activeProviders.length === 0) {
+        const configuredProviders = localProviders.filter(p => p.key && p.key.length > 0);
+
+        if (configuredProviders.length === 0) {
             this.elements.apiStatusDot.className = "status-dot status-dot--issue";
-            this.elements.apiStatusLabel.textContent = "Configure as chaves no back-end";
-        } else if (activeProviders.every((provider) => provider.status === "ready")) {
+            this.elements.apiStatusLabel.textContent = "Configure suas chaves de API";
+        } else if (configuredProviders.length === localProviders.length) {
             this.elements.apiStatusDot.className = "status-dot status-dot--ok";
-            this.elements.apiStatusLabel.textContent = "Todas as APIs prontas";
+            this.elements.apiStatusLabel.textContent = "Todas as APIs configuradas";
         } else {
             this.elements.apiStatusDot.className = "status-dot";
-            this.elements.apiStatusLabel.textContent = "Algumas integra&ccedil;&otilde;es exigem aten&ccedil;&atilde;o";
+            this.elements.apiStatusLabel.textContent = `${configuredProviders.length} de ${localProviders.length} APIs configuradas`;
         }
 
         if (this.elements.apiStatusGrid) {
             this.elements.apiStatusGrid.innerHTML = "";
-            if (providers.length === 0) {
-                const placeholder = document.createElement("div");
-                placeholder.className = "modal-hint";
-                placeholder.innerHTML = "<i class=\"fas fa-info-circle\"></i><span>Nenhum provedor configurado ainda. Adicione suas chaves no arquivo .env do servidor.</span>";
-                this.elements.apiStatusGrid.appendChild(placeholder);
-                return;
-            }
 
-            providers.forEach((provider) => {
+            localProviders.forEach((provider) => {
                 const card = document.createElement("div");
                 card.className = "api-card";
-                const statusIcon = provider.status === "ready"
+                const hasKey = provider.key && provider.key.length > 0;
+                const statusIcon = hasKey
                     ? "<span class=\"status-dot status-dot--ok\"></span>"
-                    : provider.status === "missing-key"
-                        ? "<span class=\"status-dot status-dot--issue\"></span>"
-                        : "<span class=\"status-dot\"></span>";
-                const statusLabel = provider.status === "ready"
-                    ? "Ativo"
-                    : provider.status === "missing-key"
-                        ? "Chave ausente"
-                        : "Indispon&iacute;vel";
+                    : "<span class=\"status-dot status-dot--issue\"></span>";
+                const statusLabel = hasKey ? "Configurada" : "Não configurada";
                 card.innerHTML = `
                     <div class="api-card__header">
                         ${statusIcon}
-                        <span>${provider.name || provider.id}</span>
+                        <span>${provider.name}</span>
                     </div>
                     <div class="api-card__status">${statusLabel}</div>
                 `;
@@ -1202,10 +1253,21 @@ class MultiAIChat {
             theme
         };
 
+        // Salvar API keys
+        this.state.apiKeys = {
+            openai: this.elements.openaiKey?.value.trim() || "",
+            anthropic: this.elements.anthropicKey?.value.trim() || "",
+            google: this.elements.googleKey?.value.trim() || "",
+            perplexity: this.elements.perplexityKey?.value.trim() || "",
+            deepseek: this.elements.deepseekKey?.value.trim() || ""
+        };
+
         this.applyTheme(theme);
         this.saveSettings();
+        this.saveApiKeys();
+        this.updateApiStatus();
         this.closeSettings();
-        this.showToast("Prefer&ecirc;ncias salvas", "As configura&ccedil;&otilde;es ser&atilde;o aplicadas nas pr&oacute;ximas intera&ccedil;&otilde;es.");
+        this.showToast("Prefer&ecirc;ncias salvas", "Configura&ccedil;&otilde;es e chaves de API atualizadas com sucesso.");
     }
 
     saveSettings() {

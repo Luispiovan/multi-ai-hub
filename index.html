@@ -171,13 +171,43 @@
 
             <div class="modal__body">
                 <section>
+                    <h4 class="modal-section-title"><i class="fas fa-key"></i> Chaves de API</h4>
+                    <div class="modal-hint">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Suas chaves são armazenadas localmente no navegador e nunca são enviadas para servidores externos.</span>
+                    </div>
+                    <div class="api-keys-form">
+                        <label class="form-control">
+                            <span><i class="fab fa-openai"></i> OpenAI API Key</span>
+                            <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off">
+                            <small>Obtenha em: platform.openai.com/api-keys</small>
+                        </label>
+                        <label class="form-control">
+                            <span><i class="fas fa-brain"></i> Anthropic API Key</span>
+                            <input type="password" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off">
+                            <small>Obtenha em: console.anthropic.com</small>
+                        </label>
+                        <label class="form-control">
+                            <span><i class="fab fa-google"></i> Google API Key</span>
+                            <input type="password" id="googleKey" placeholder="AIza..." autocomplete="off">
+                            <small>Obtenha em: makersuite.google.com/app/apikey</small>
+                        </label>
+                        <label class="form-control">
+                            <span><i class="fas fa-search"></i> Perplexity API Key</span>
+                            <input type="password" id="perplexityKey" placeholder="pplx-..." autocomplete="off">
+                            <small>Obtenha em: perplexity.ai/settings/api</small>
+                        </label>
+                        <label class="form-control">
+                            <span><i class="fas fa-code"></i> DeepSeek API Key</span>
+                            <input type="password" id="deepseekKey" placeholder="sk-..." autocomplete="off">
+                            <small>Obtenha em: platform.deepseek.com/api_keys</small>
+                        </label>
+                    </div>
+                </section>
+
+                <section>
                     <h4 class="modal-section-title"><i class="fas fa-satellite"></i> Status das APIs</h4>
                     <div class="api-grid" id="apiStatusGrid"></div>
-                    <div class="modal-hint">
-                        <i class="fas fa-info-circle"></i>
-                        <span>As chaves de API s&atilde;o carregadas via back-end. Atualize o arquivo <code>.env</code>
-                            do servidor e reinicie a aplica&ccedil;&atilde;o.</span>
-                    </div>
                 </section>
 
                 <section>
